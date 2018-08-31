@@ -64,12 +64,12 @@ using CaixaEletronicoCode.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(47, 967, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f82fe4c783154d92bbc430e203cf28b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5aebc0da28b14770a0d9de653ceaabef", async() => {
                 BeginContext(53, 132, true);
                 WriteLiteral("\r\n    <div class=\"header\">\r\n        <h2>Testando Saque</h2>\r\n    </div>\r\n    <style media=\"all\" type=\"text/css\">\r\n    </style>\r\n    ");
                 EndContext();
                 BeginContext(185, 305, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "77a65a9cba9c481987bbaf3d8db6392f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e63770f6c6584ae7a49effc27cb0a2aa", async() => {
                     BeginContext(239, 244, true);
                     WriteLiteral("\r\n        <div>\r\n            <label for=\"ValorSaque\">Insira o valor a ser sacado:</label>\r\n            <input type=\"text\" name=\"ValorSaque\" value=\"\" placeholder=\"Insira o valor aqui\" />\r\n            <input type=\"submit\" />\r\n        </div>\r\n    ");
                     EndContext();

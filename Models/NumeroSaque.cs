@@ -2,18 +2,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CaixaEletronicoCode.Models
 {
-    public class NumeroSaque
-    {
-        public ActionResult Value { get; set;  }
-    }
-
     public class ValoresNotas
     {
-        public ListaNotas[] ListaFinal { get; set; }
+        public int n100 { get; set; }
+        public int n50 { get; set; }
+        public int n20 { get; set; }
+        public int n10 { get; set; }
+        public int n5 { get; set; }
+        public int n2 { get; set; }
     }
 
-    public class ListaNotas
+    public class Test
     {
-        public int Notas { get; set; }
+        public string TestNumber { get; set; }
     }
 }

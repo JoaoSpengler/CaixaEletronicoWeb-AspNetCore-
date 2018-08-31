@@ -8,18 +8,6 @@ namespace CaixaEletronicoCode.Controllers
     public class SaqueController : Controller
     {
         [HttpPost]
-        public ActionResult Index(string ValorSaque)
-        {
-            var valorTest = ValorSaque;
-
-            var sacando = new CaixaEletronicoCode.Models.NumeroSaque()
-            {
-                Value = CalculoTest(valorTest)
-            };
-
-            return View(sacando);
-        }
-
         private ActionResult CalculoTest(string valorTest)
         {
             var testSaque = valorTest;
@@ -48,10 +36,20 @@ namespace CaixaEletronicoCode.Controllers
             
             var testModelo = new ValoresNotas()
             {
-
+                n100 = nota100,
+                n50 = nota50,
+                n20 = nota20,
+                n10 = nota10,
+                n5 = nota5,
+                n2 = nota2,
             };
 
-            return View(testModelo);
+            var testando = new Test()
+            {
+                TestNumber = valorTest
+            };
+
+            return View(testando);
         }
     }
 }
