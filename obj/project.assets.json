@@ -11506,11 +11506,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CaixaEletronicoCode\\CaixaEletronicoCode.csproj",
+      "projectUniqueName": "C:\\Users\\joao.spengler\\Desktop\\CaixaEletronicoWeb-AspNetCore-\\CaixaEletronicoCode.csproj",
       "projectName": "CaixaEletronicoCode",
-      "projectPath": "C:\\CaixaEletronicoCode\\CaixaEletronicoCode.csproj",
+      "projectPath": "C:\\Users\\joao.spengler\\Desktop\\CaixaEletronicoWeb-AspNetCore-\\CaixaEletronicoCode.csproj",
       "packagesPath": "C:\\Users\\joao.spengler\\.nuget\\packages\\",
-      "outputPath": "C:\\CaixaEletronicoCode\\obj\\",
+      "outputPath": "C:\\Users\\joao.spengler\\Desktop\\CaixaEletronicoWeb-AspNetCore-\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

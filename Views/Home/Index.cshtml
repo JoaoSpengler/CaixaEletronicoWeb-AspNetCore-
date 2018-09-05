@@ -1,33 +1,109 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Home Page";
 }
 
+@model ValoresNotas
+
+<head>
+    <style>
+        table {
+            border-collapse: inherit;
+            border: 2px solid black;
+            padding: 2px;
+        }
+        th {
+            background-color: black;
+            color: white;
+            width:150px;
+            text-align:center;
+        }
+    </style>
+</head>
 <body>
     <div class="header">
-        <h2>Testando Saque</h2>
+        <h2>Caixa Eletrônico</h2>
     </div>
-    <style media="all" type="text/css">
-    </style>
-    <form method="POST" class="formBonito" runat="server">
+    <div>
+        <br>
+        <h4>Deposito</h4>
+    </div>
+    <form method="POST" runat="server">
         <div>
-            <label for="ValorSaque">Insira o valor a ser sacado:</label>
-            <input type="text" name="ValorSaque" value="" placeholder="Insira o valor aqui" />
-            <input type="submit" />
+            <label for="ValorDeposita">Deposite o valor:</label>
+            <input type="text" name="ValorDeposita" value="" placeholder="Insira aqui" />
         </div>
     </form>
+    <button id="Depositar">Depositar</button>
     <div>
-        <h2>Notas</h2>
-        <ul>
-            <!--Inserir os resultados-->
-            <!--Usar XMLHttp?-->
-            <li id="nota100">Notas de R$100: </li>
-            <li id="nota50">Notas de R$50: </li>
-            <li id="nota20">Notas de R$20: </li>
-            <li id="nota10">Notas de R$10: </li>
-            <li id="nota5">Notas de R$5: </li>
-            <li id="nota2">Notas de R$2: </li>
-        </ul>
-        <label for="resultado">Valor final do saque: </label>
+        <br>
+        <p>Saldo total: <b>@Html.DisplayFor(modelItem => Model.SaldoFinal)</b></p>
     </div>
+    <div>
+        <br>
+        <h4>Saque</h4>
+    </div>
+    <form method="POST" runat="server">
+        <div>
+            <label for="ValorSaque">Valor a ser sacado:</label>
+            <input type="text" name="ValorSaque" value="" placeholder="Insira aqui" />
+        </div>
+    </form>
+    <button id="Sacar">Sacar</button>
+    <div>
+        <h3>Notas</h3>
+        <table>
+            <tr>
+                <th>Valor Notas</th>
+                <th>Quantidade</th>
+            </tr>
+            <tr>
+                <td>Nota de 100</td>
+                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N100)</td>
+            </tr>
+            <tr>
+                <td>Nota de 50</td>
+                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N50)</td>
+            </tr>
+            <tr>
+                <td>Nota de 20</td>
+                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N20)</td>
+            </tr>
+            <tr>
+                <td>Nota de 10</td>
+                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N10)</td>
+            </tr>
+            <tr>
+                <td>Nota de 5</td>
+                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N5)</td>
+            </tr>
+            <tr>
+                <td>Nota de 2</td>
+                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N2)</td>
+            </tr>
+        </table>
+        <div>
+            <br>
+            <b>@Html.DisplayFor(modelItem => Model.Valid)</b> <!--Somente sinalizar se saque for inválido-->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function{
+            $('#ValorSaque').click(function () {
+                $.ajax({
+                    url: '@Url.Action("CalculaSaque")',
+                    data: { value: $("#ValorSaque").val() },
+                    sucess: function (r) {
+                        console.log("testando");
+                        $("nota100").html(r.nota100)
+                        $("nota50").html(r.nota50)
+                        $("nota20").html(r.nota20)
+                        $("nota10").html(r.nota10)
+                        $("nota5").html(r.nota5)
+                        $("nota2").html(r.nota2)
+                    }
+                })
+            })
+        })
+    </script>
 
 </body>
