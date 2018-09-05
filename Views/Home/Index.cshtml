@@ -45,7 +45,7 @@
     <form method="POST" runat="server">
         <div>
             <label for="ValorSaque">Valor a ser sacado:</label>
-            <input type="text" name="ValorSaque" value="" placeholder="Insira aqui" />
+            <input type="text" name="ValorSaque" id="ValorSaque" placeholder="Insira aqui" />
         </div>
     </form>
     <button id="Sacar">Sacar</button>
@@ -83,23 +83,25 @@
         </table>
         <div>
             <br>
-            <b>@Html.DisplayFor(modelItem => Model.Valid)</b> <!--Somente sinalizar se saque for inválido-->
+            <b>@Html.DisplayFor(modelItem => Model.Valid)</b> 
+            <!--Somente sinalizar se saque for inválido-->
         </div>
     </div>
     <script>
         $(document).ready(function{
-            $('#ValorSaque').click(function () {
+            $("#Sacar").click(function () {
                 $.ajax({
                     url: '@Url.Action("CalculaSaque")',
                     data: { value: $("#ValorSaque").val() },
+                    contentType: "application/json",
                     sucess: function (r) {
                         console.log("testando");
-                        $("nota100").html(r.nota100)
-                        $("nota50").html(r.nota50)
-                        $("nota20").html(r.nota20)
-                        $("nota10").html(r.nota10)
-                        $("nota5").html(r.nota5)
-                        $("nota2").html(r.nota2)
+                        $("nota100").html(r.nota100);
+                        $("nota50").html(r.nota50);
+                        $("nota20").html(r.nota20);
+                        $("nota10").html(r.nota10);
+                        $("nota5").html(r.nota5);
+                        $("nota2").html(r.nota2);
                     }
                 })
             })
