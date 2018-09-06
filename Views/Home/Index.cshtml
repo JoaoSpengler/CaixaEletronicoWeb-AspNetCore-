@@ -17,7 +17,26 @@
             width:150px;
             text-align:center;
         }
+        button{
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2), 0 2px 3px 0 rgba(0,0,0,0.19);
+            border: none;
+            padding: 3px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: #e7e7e7;
+            color: black;
+            border-radius: 3px;
+            border: 0.5px solid #8c8c8c;
+        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>    
 </head>
 <body>
     <div class="header">
@@ -46,9 +65,9 @@
         <div>
             <label for="ValorSaque">Valor a ser sacado:</label>
             <input type="text" name="ValorSaque" id="ValorSaque" placeholder="Insira aqui" />
+            <button id="Sacar">Sacar</button>
         </div>
     </form>
-    <button id="Sacar">Sacar</button>
     <div>
         <h3>Notas</h3>
         <table>
@@ -58,27 +77,27 @@
             </tr>
             <tr>
                 <td>Nota de 100</td>
-                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N100)</td>
+                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N100)</td>
             </tr>
             <tr>
                 <td>Nota de 50</td>
-                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N50)</td>
+                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N50)</td>
             </tr>
             <tr>
                 <td>Nota de 20</td>
-                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N20)</td>
+                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N20)</td>
             </tr>
             <tr>
                 <td>Nota de 10</td>
-                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N10)</td>
+                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N10)</td>
             </tr>
             <tr>
                 <td>Nota de 5</td>
-                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N5)</td>
+                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N5)</td>
             </tr>
             <tr>
                 <td>Nota de 2</td>
-                <td style="text-align:center">@Html.DisplayFor(modelItem => Model.N2)</td>
+                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N2)</td>
             </tr>
         </table>
         <div>
@@ -87,25 +106,25 @@
             <!--Somente sinalizar se saque for inválido-->
         </div>
     </div>
-    <script>
-        $(document).ready(function{
-            $("#Sacar").click(function () {
-                $.ajax({
-                    url: '@Url.Action("CalculaSaque")',
-                    data: { value: $("#ValorSaque").val() },
-                    contentType: "application/json",
-                    sucess: function (r) {
-                        console.log("testando");
-                        $("nota100").html(r.nota100);
-                        $("nota50").html(r.nota50);
-                        $("nota20").html(r.nota20);
-                        $("nota10").html(r.nota10);
-                        $("nota5").html(r.nota5);
-                        $("nota2").html(r.nota2);
-                    }
-                })
-            })
-        })
+    <h3>Primeira página com JQUERY</h3>
+    <div id=”box1”>
+        Artigo sobre JQUERY escrito por <span>Rodrigo Marques</span>.
+    </div>
+    <div class=”box2”>
+        Classe Box2 sendo executada.
+    </div>
+    <div class=”box2”>
+        <h3>Outra DIV</h3>
+        Outra div com a mesma classe.
+    </div>
+    <!--Este ajax tem que ser modificado para a atualização da tabela-->
+    <script type="text/javascript">
+        $(function(){
+            $(“h3”).css(“background”,”#FF0000”);
+            $(“#box1”).css(“color”, “#FFFF00”);
+            $(“.box1 span”).fadeOut(1000);
+            $(“.box2”).css(“border”, “1px solid #000000”);
+            $(“.box2 h3”).text(“TESTANDO TEXTO PELO JQUERY”);
+    });
     </script>
-
 </body>
