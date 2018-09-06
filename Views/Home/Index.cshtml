@@ -50,12 +50,12 @@
         <div>
             <label for="ValorDeposita">Deposite o valor:</label>
             <input type="text" name="ValorDeposita" value="" placeholder="Insira aqui" />
+            <button id="Depositar">Depositar</button>
         </div>
     </form>
-    <button id="Depositar">Depositar</button>
     <div>
         <br>
-        <p>Saldo total: <b>@Html.DisplayFor(modelItem => Model.SaldoFinal)</b></p>
+        <p>Saldo total: <b id="SaldoTotal">0</b></p>
     </div>
     <div>
         <br>
@@ -77,27 +77,27 @@
             </tr>
             <tr>
                 <td>Nota de 100</td>
-                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N100)</td>
+                <td id="tableNotes100" style="text-align:center">0</td>
             </tr>
             <tr>
                 <td>Nota de 50</td>
-                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N50)</td>
+                <td id="tableNotes50" style="text-align:center">0</td>
             </tr>
             <tr>
                 <td>Nota de 20</td>
-                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N20)</td>
+                <td id="tableNotes20" style="text-align:center">0</td>
             </tr>
             <tr>
                 <td>Nota de 10</td>
-                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N10)</td>
+                <td id="tableNotes10" style="text-align:center">0</td>
             </tr>
             <tr>
                 <td>Nota de 5</td>
-                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N5)</td>
+                <td id="tableNotes5" style="text-align:center">0</td>
             </tr>
             <tr>
                 <td>Nota de 2</td>
-                <td id="tableNotes" style="text-align:center">@Html.DisplayFor(modelItem => Model.N2)</td>
+                <td id="tableNotes2" style="text-align:center">0</td>
             </tr>
         </table>
         <div>
@@ -106,25 +106,17 @@
             <!--Somente sinalizar se saque for inválido-->
         </div>
     </div>
-    <h3>Primeira página com JQUERY</h3>
-    <div id=”box1”>
-        Artigo sobre JQUERY escrito por <span>Rodrigo Marques</span>.
-    </div>
-    <div class=”box2”>
-        Classe Box2 sendo executada.
-    </div>
-    <div class=”box2”>
-        <h3>Outra DIV</h3>
-        Outra div com a mesma classe.
-    </div>
     <!--Este ajax tem que ser modificado para a atualização da tabela-->
-    <script type="text/javascript">
-        $(function(){
-            $(“h3”).css(“background”,”#FF0000”);
-            $(“#box1”).css(“color”, “#FFFF00”);
-            $(“.box1 span”).fadeOut(1000);
-            $(“.box2”).css(“border”, “1px solid #000000”);
-            $(“.box2 h3”).text(“TESTANDO TEXTO PELO JQUERY”);
-    });
+    <script>
+        $(document).ready(function(){
+            $("#Sacar").click(function(){
+                $("#tableNotes100").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+                $("#tableNotes50").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+                $("#tableNotes20").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+                $("#tableNotes10").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+                $("#tableNotes5").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+                $("#tableNotes2").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+            })
+        })
     </script>
 </body>

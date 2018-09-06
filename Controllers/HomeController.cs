@@ -21,7 +21,7 @@ namespace CaixaEletronicoCode.Controllers
             return View();
         }
         
-        public ActionResult DepositaValor(string ValorDeposita)
+        public ActionResult DepositarValor(string ValorDeposita)
         {
             var deposito = ValorDeposita;
             int depositarValor = Convert.ToInt32(deposito);
@@ -30,7 +30,7 @@ namespace CaixaEletronicoCode.Controllers
 
             var testDeposito = depositando.AcrescentaSaldo(depositarValor);
 
-            return View(depositando);
+            return Json(testDeposito);
         }
     
         public ActionResult CalculaSaque(string ValorSaque)
