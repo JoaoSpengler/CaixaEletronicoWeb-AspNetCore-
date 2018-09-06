@@ -10,18 +10,20 @@ namespace CaixaEletronicoCode.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var testandoFinal = new ValoresNotas{
+                N100 = 0,
+                N50 = 0,
+                N20 = 0,
+                N10 = 0,
+                N5 = 0,
+                N2 = 0
+            };
+
+            return View(testandoFinal);
         }
 
         [HttpPost]
-        public ActionResult Index(string ValorSaque, string ValorDeposita)
-        {
-            var saqueFinal = CalculaSaque(ValorSaque);
-            //var depositoTotal = DepositaValor(ValorDeposita);
-            return View();
-        }
-        
-        public ActionResult DepositarValor(string ValorDeposita)
+        public JsonResult DepositarValor(string ValorDeposita)
         {
             var deposito = ValorDeposita;
             int depositarValor = Convert.ToInt32(deposito);
@@ -33,7 +35,8 @@ namespace CaixaEletronicoCode.Controllers
             return Json(testDeposito);
         }
     
-        public ActionResult CalculaSaque(string ValorSaque)
+        [HttpPost]
+        public IActionResult CalculaSaque(string ValorSaque)
         {
             var testSaque = ValorSaque;
             int value;
@@ -106,7 +109,7 @@ namespace CaixaEletronicoCode.Controllers
                         SaldoFinal = testeDeposito.AtualizaSaldo(testAttValor)
                     };
                     //Retirar Valor do Saque do Saldo total e Atualizar na tela.
-                    return View(testModelo);
+                    return Json(testModelo);
                 }
                 else
                 {
@@ -114,7 +117,7 @@ namespace CaixaEletronicoCode.Controllers
                     {
                         Valid = "O saque é inválido"
                     };
-                    return View(testModelo);
+                    return Json(testModelo);
                 }
             }
         }

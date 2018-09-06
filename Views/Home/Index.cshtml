@@ -55,51 +55,54 @@
     </form>
     <div>
         <br>
-        <p>Saldo total: <b id="SaldoTotal">0</b></p>
+        <p>Saldo total: <b id="SaldoTotal"></b></p>
     </div>
     <div>
         <br>
         <h4>Saque</h4>
     </div>
-    <form method="POST" runat="server">
+    <form method="POST" action="CalculaSaque" runat="server">
         <div>
             <label for="ValorSaque">Valor a ser sacado:</label>
             <input type="text" name="ValorSaque" id="ValorSaque" placeholder="Insira aqui" />
-            <button id="Sacar">Sacar</button>
         </div>
+        
     </form>
+    <button id="Sacar">Sacar</button>
     <div>
-        <h3>Notas</h3>
-        <table>
-            <tr>
-                <th>Valor Notas</th>
-                <th>Quantidade</th>
-            </tr>
-            <tr>
-                <td>Nota de 100</td>
-                <td id="tableNotes100" style="text-align:center">0</td>
-            </tr>
-            <tr>
-                <td>Nota de 50</td>
-                <td id="tableNotes50" style="text-align:center">0</td>
-            </tr>
-            <tr>
-                <td>Nota de 20</td>
-                <td id="tableNotes20" style="text-align:center">0</td>
-            </tr>
-            <tr>
-                <td>Nota de 10</td>
-                <td id="tableNotes10" style="text-align:center">0</td>
-            </tr>
-            <tr>
-                <td>Nota de 5</td>
-                <td id="tableNotes5" style="text-align:center">0</td>
-            </tr>
-            <tr>
-                <td>Nota de 2</td>
-                <td id="tableNotes2" style="text-align:center">0</td>
-            </tr>
-        </table>
+        <form action="CalculaSaque">
+            <h3>Notas</h3>
+            <table>
+                <tr>
+                    <th>Valor Notas</th>
+                    <th>Quantidade</th>
+                </tr>
+                <tr>
+                    <td>Nota de 100</td>
+                    <td id="nota100" style="text-align:center">@Model.N100</td>
+                </tr>
+                <tr>
+                    <td>Nota de 50</td>
+                    <td id="nota50" style="text-align:center">@Model.N50</td>
+                </tr>
+                <tr>
+                    <td>Nota de 20</td>
+                    <td id="nota20" style="text-align:center">@Model.N20</td>
+                </tr>
+                <tr>
+                    <td>Nota de 10</td>
+                    <td id="nota10" style="text-align:center">@Model.N10</td>
+                </tr>
+                <tr>
+                    <td>Nota de 5</td>
+                    <td id="nota5" style="text-align:center">@Model.N5</td>
+                </tr>
+                <tr>
+                    <td>Nota de 2</td>
+                    <td id="nota2" style="text-align:center">@Model.N2</td>
+                </tr>
+            </table>
+        </form>
         <div>
             <br>
             <b>@Html.DisplayFor(modelItem => Model.Valid)</b> 
@@ -110,12 +113,19 @@
     <script>
         $(document).ready(function(){
             $("#Sacar").click(function(){
-                $("#tableNotes100").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
-                $("#tableNotes50").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
-                $("#tableNotes20").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
-                $("#tableNotes10").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
-                $("#tableNotes5").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
-                $("#tableNotes2").html(/*Achar umas maneira de atualizar a tabela sem recaregar a page*/);
+                $.ajax({
+                    url: '@Url.Action("CalculaSaque")',
+                    data: { value: $("#ValorSaque").val() },
+                    success: function (r) {
+                        console.log("testando");
+                        $("#nota100").html(r.N100);
+                        $("#nota50").html(r.n50);
+                        $("#nota20").html(r.n20);
+                        $("#nota10").html(r.n10);
+                        $("#nota5").html(r.n5);
+                        $("#nota2").html(r.n2);
+                    }
+                })
             })
         })
     </script>

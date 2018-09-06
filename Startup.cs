@@ -48,9 +48,9 @@ namespace CaixaEletronicoCode
                 app.UseHsts();
             }
 
+            app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
