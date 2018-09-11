@@ -1,15 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\bin",
     "\\bin\\Release",
-    "\\Controllers",
-    "\\Models",
-    "\\obj",
     "\\obj\\Debug",
-    "\\obj\\Release",
-    "\\Properties",
-    "\\Views"
+    "\\obj\\Release"
   ],
+  "SelectedNode": "\\Controllers",
   "PreviewInSolutionExplorer": false
 }
