@@ -16,10 +16,10 @@ namespace CaixaEletronicoCode.Controllers
                 N100 = 0,
                 N50 = 0,
                 N20 = 0,
-                N10 = 10,
+                N10 = 0,
                 N5 = 0,
-                N2 = 2,
-                Valid = "Pode ser realizado o saque"
+                N2 = 0,
+                Valid = "Aguardando Transações!"
             };
 
             return View(testModelo);

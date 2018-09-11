@@ -9,11 +9,14 @@
         table {
             border-collapse: inherit;
             border: 2px solid black;
+            border-radius: 7px;
             padding: 2px;
+            background-color: rgb(238, 232, 232);
         }
         th {
             background-color: black;
-            color: white;
+            padding: 3px;
+            color: rgb(255, 255, 255);
             width:150px;
             text-align:center;
         }
@@ -32,6 +35,21 @@
             border-radius: 3px;
             border: 0.5px solid #8c8c8c;
         }
+        .transation{
+            color: black;
+            background-color:white;
+            border: 2px solid black;
+            border-radius: 13px;
+            padding: 6px;
+        }
+        input{
+            border-radius: 5px;
+            border-color: black;
+        }
+        .deposit, .withdraw{
+            background-color:rgb(250, 228, 199);
+            padding: 13px;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -42,68 +60,74 @@
     <div class="header">
         <h2>Caixa Eletrônico</h2>
     </div>
-    <div>
-        <br>
-        <h4>Deposito</h4>
-    </div>
-    <form method="POST" runat="server">
-        <div>
-            <label for="ValorDeposita">Deposite o valor:</label>
-            <input type="text" id="ValorDeposita" name="valorDep" placeholder="Insira aqui" />
-        </div>
-    </form>
-    <button id="Depositar">Depositar</button>
-    <div>
-        <br>
-        <p>Saldo total: <b id="saldoTotal">@Model.SaldoFinal</b></p>
-    </div>
-    <div>
-        <br>
-        <h4>Saque</h4>
-    </div>
-    <form method="POST" runat="server">
-        <div>
-            <label for="ValorSaque">Valor a ser sacado:</label>
-            <input type="text" id="ValorSaque" name="valorSaq" placeholder="Insira aqui" />
-        </div>
-    </form>
-    <button id="Sacar">Sacar</button>
-    <div>
-        <h3>Notas</h3>
-        <table>
-            <tr>
-                <th>Valor Notas</th>
-                <th>Quantidade</th>
-            </tr>
-            <tr>
-                <td>Nota de 100</td>
-                <td name="nota100" id="nota100" style="text-align:center">@Model.N100</td>
-            </tr>
-            <tr>
-                <td>Nota de 50</td>
-                <td name="nota50" id="nota50" style="text-align:center">@Model.N50</td>
-            </tr>
-            <tr>
-                <td>Nota de 20</td>
-                <td name="nota20" id="nota20" style="text-align:center">@Model.N20</td>
-            </tr>
-            <tr>
-                <td>Nota de 10</td>
-                <td name="nota10" id="nota10" style="text-align:center">@Model.N10</td>
-            </tr>
-            <tr>
-                <td>Nota de 5</td>
-                <td name="nota5" id="nota5" style="text-align:center">@Model.N5</td>
-            </tr>
-            <tr>
-                <td>Nota de 2</td>
-                <td name="nota2" id="nota2" style="text-align:center">@Model.N2</td>
-            </tr>
-        </table>
+    <div class="deposit">
         <div>
             <br>
-            <b id="valid">@Model.Valid</b> 
-            <!--Somente sinalizar se saque for inválido-->
+            <h4>Deposito</h4>
+        </div>
+        <form method="POST" runat="server">
+            <div>
+                <label for="ValorDeposita">Deposite o valor:</label>
+                <input type="text" id="ValorDeposita" name="valorDep" placeholder="Insira aqui" />
+            </div>
+        </form>
+        <button id="Depositar">Depositar</button>
+        <div>
+            <br>
+            <p>Saldo total: <b id="saldoTotal">@Model.SaldoFinal</b></p>
+        </div>
+    </div>
+    <div class="withdraw">
+        <div>
+            <br>
+            <h4>Saque</h4>
+        </div>
+        <form method="POST" runat="server">
+            <div>
+                <label for="ValorSaque">Valor a ser sacado:</label>
+                <input type="text" id="ValorSaque" name="valorSaq" placeholder="Insira aqui" />
+            </div>
+        </form>
+        <button id="Sacar">Sacar</button>
+        <div>
+            <h3>Notas</h3>
+            <table>
+                <tr>
+                    <th>Valor Notas</th>
+                    <th>Quantidade</th>
+                </tr>
+                <tr>
+                    <td>Nota de 100</td>
+                    <td name="nota100" id="nota100" style="text-align:center">@Model.N100</td>
+                </tr>
+                <tr>
+                    <td>Nota de 50</td>
+                    <td name="nota50" id="nota50" style="text-align:center">@Model.N50</td>
+                </tr>
+                <tr>
+                    <td>Nota de 20</td>
+                    <td name="nota20" id="nota20" style="text-align:center">@Model.N20</td>
+                </tr>
+                <tr>
+                    <td>Nota de 10</td>
+                    <td name="nota10" id="nota10" style="text-align:center">@Model.N10</td>
+                </tr>
+                <tr>
+                    <td>Nota de 5</td>
+                    <td name="nota5" id="nota5" style="text-align:center">@Model.N5</td>
+                </tr>
+                <tr>
+                    <td>Nota de 2</td>
+                    <td name="nota2" id="nota2" style="text-align:center">@Model.N2</td>
+                </tr>
+            </table>
+            <div>
+                <br>
+                <b class="transation" id="valid">
+                    @Model.Valid
+                </b> 
+                <!--Somente sinalizar se saque for inválido-->
+            </div>
         </div>
     </div>
     <script>
