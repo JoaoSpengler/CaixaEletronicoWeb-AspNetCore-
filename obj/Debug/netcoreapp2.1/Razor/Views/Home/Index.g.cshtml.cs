@@ -67,7 +67,7 @@ using CaixaEletronicoCode.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(66, 1558, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "888c2996cd2e482ab95281b36dd28b40", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8195f2f5b3e346fe9794928cc464ec1e", async() => {
                 BeginContext(72, 1545, true);
                 WriteLiteral(@"
     <style>
@@ -139,12 +139,12 @@ using CaixaEletronicoCode.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(1626, 4075, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0a0c6deda711419caef3b33d364ca6b5", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "52185070cf714ecc82885bffa0514107", async() => {
                 BeginContext(1632, 190, true);
                 WriteLiteral("\r\n    <div class=\"header\">\r\n        <h2>Caixa Eletrônico</h2>\r\n    </div>\r\n    <div class=\"deposit\">\r\n        <div>\r\n            <br>\r\n            <h4>Deposito</h4>\r\n        </div>\r\n        ");
                 EndContext();
                 BeginContext(1822, 261, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "66f88d3d708c46e0ad39196d2a70c6c9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "21f128eac55844a7a6d13594d1656666", async() => {
                     BeginContext(1857, 219, true);
                     WriteLiteral("\r\n            <div>\r\n                <label for=\"ValorDeposita\">Deposite o valor:</label>\r\n                <input type=\"text\" id=\"ValorDeposita\" name=\"valorDep\" placeholder=\"Insira aqui\" />\r\n            </div>\r\n        ");
                     EndContext();
@@ -179,7 +179,7 @@ using CaixaEletronicoCode.Models;
                 WriteLiteral("</b></p>\r\n        </div>\r\n    </div>\r\n    <div class=\"withdraw\">\r\n        <div>\r\n            <br>\r\n            <h4>Saque</h4>\r\n        </div>\r\n        ");
                 EndContext();
                 BeginContext(2384, 257, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "47fa9d3c97b84bcbada9ed27776c0d29", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c8aae8d483fa44e09bd7c5c8c5e1ff4b", async() => {
                     BeginContext(2419, 215, true);
                     WriteLiteral("\r\n            <div>\r\n                <label for=\"ValorSaque\">Valor a ser sacado:</label>\r\n                <input type=\"text\" id=\"ValorSaque\" name=\"valorSaq\" placeholder=\"Insira aqui\" />\r\n            </div>\r\n        ");
                     EndContext();

@@ -12,5 +12,12 @@ namespace CaixaEletronicoCode.Models
         public int N2 { get; set; }
         public string Valid { get; set; }
         public int SaldoFinal { get; set; }
+
+        public int AtualizaSaldo(int deposito)
+        {
+            SaldoFinal += deposito;
+
+            return SaldoFinal;
+        }
     }
 }

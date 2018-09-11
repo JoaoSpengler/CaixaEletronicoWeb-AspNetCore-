@@ -32,11 +32,11 @@ namespace CaixaEletronicoCode.Controllers
             var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
 
-            var depositando = new Deposito();
+            var balanceTotal = new ValoresNotas();
 
             var depositoSaque = new ValoresNotas
             {
-                SaldoFinal = depositando.AcrescentaSaldo(depositarValor)
+                SaldoFinal = balanceTotal.AtualizaSaldo(depositarValor)
             };
 
             HttpContext.Session.SetObjectAsJson("Saldo" , depositoSaque.SaldoFinal);
@@ -48,7 +48,7 @@ namespace CaixaEletronicoCode.Controllers
         public JsonResult CalculaSaque(string valorSaq)
         {
             var testSaque = valorSaq;
-            var balance = HttpContext.Session.GetObjectFromJson<ValoresNotas>("Saldo");
+            var balance = HttpContext.Session.GetObjectFromJson<int>("Saldo");
             
             int value;
 
@@ -75,19 +75,25 @@ namespace CaixaEletronicoCode.Controllers
             //Trocar variáveis para trabalhar com o Saldo ao invés do depósito
 
             //Apenas ilustrativo / para se ter uma noção se o deposito funciona
-            var testeDeposito = new Deposito()
-            {
-                SaldoTotal = 1000
-            };
+            
 
-            bool saqueAprovado = testeDeposito.VerificaSaldo(value);
+            bool saqueAprovado;
+            
+            if (value > balance){
+                saqueAprovado = false;
+            }
+            else
+            {
+                saqueAprovado = true;
+            }
             
             if (saqueAprovado == false)
             {
                 //Mostrar ao usuario que o saldo é insuficiente.
                 var saldoInsuficiente = new ValoresNotas()
                 {
-                    Valid = "valor do Saldo Insuficiente"
+                    SaldoFinal = balance,
+                    Valid = "Saldo Insuficiente"
                 };
                 return Json(saldoInsuficiente);
             }
@@ -123,7 +129,7 @@ namespace CaixaEletronicoCode.Controllers
                         N10 = nota10,
                         N5 = nota5,
                         N2 = nota2,
-                        SaldoFinal = testeDeposito.AtualizaSaldo(testAttValor),
+                        SaldoFinal = balance - testAttValor,
                         Valid = "Saque efetuado com sucesso"
                     };
                     //Retirar Valor do Saque do Saldo total e Atualizar na tela.
@@ -133,7 +139,7 @@ namespace CaixaEletronicoCode.Controllers
                 {
                     var testModelo = new ValoresNotas()
                     {
-                        Valid = "O saque é inválido"
+                        Valid = "Valor inválido, notas indisponiveis"
                     };
                     return Json(testModelo);
                 }
