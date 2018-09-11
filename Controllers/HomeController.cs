@@ -27,6 +27,8 @@ namespace CaixaEletronicoCode.Controllers
 
         public JsonResult DepositaValor(string valorDep)
         {
+            //Criar e gerenciar a sessão com os dados do Saldo!
+
             var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
 
@@ -36,6 +38,9 @@ namespace CaixaEletronicoCode.Controllers
             {
                 SaldoFinal = depositando.AcrescentaSaldo(depositarValor)
             };
+
+            HttpContext.Session.SetObjectAsJson("Saldo" , depositoSaque.SaldoFinal);
+
             return Json(depositoSaque);
         }
 
@@ -43,6 +48,7 @@ namespace CaixaEletronicoCode.Controllers
         public JsonResult CalculaSaque(string valorSaq)
         {
             var testSaque = valorSaq;
+            var balance = HttpContext.Session.GetObjectFromJson<ValoresNotas>("Saldo");
             
             int value;
 
@@ -65,6 +71,8 @@ namespace CaixaEletronicoCode.Controllers
             {
                 testAttValor = value;
             }
+
+            //Trocar variáveis para trabalhar com o Saldo ao invés do depósito
 
             //Apenas ilustrativo / para se ter uma noção se o deposito funciona
             var testeDeposito = new Deposito()
