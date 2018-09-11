@@ -49,13 +49,13 @@
     <form method="POST" runat="server">
         <div>
             <label for="ValorDeposita">Deposite o valor:</label>
-            <input type="text" name="ValorDeposita" value="" placeholder="Insira aqui" />
+            <input type="text" id="ValorDeposita" name="valorDep" placeholder="Insira aqui" />
         </div>
     </form>
     <button id="Depositar">Depositar</button>
     <div>
         <br>
-        <p>Saldo total: <b id="saldoTotal"></b></p>
+        <p>Saldo total: <b id="saldoTotal">@Model.SaldoFinal</b></p>
     </div>
     <div>
         <br>
@@ -64,7 +64,7 @@
     <form method="POST" runat="server">
         <div>
             <label for="ValorSaque">Valor a ser sacado:</label>
-            <input type="text" id="ValorSaque" name="ValorSaque" placeholder="Insira aqui" />
+            <input type="text" id="ValorSaque" name="valorSaq" placeholder="Insira aqui" />
         </div>
     </form>
     <button id="Sacar">Sacar</button>
@@ -109,32 +109,35 @@
     <script>
         $(document).ready(function(){
             $("#Sacar").click(function(){
-                $.post(
-                    '@Url.Action("CalculaSaque")',
-                    {value: $("#ValorSaque").val()},
-                    function(r){
+                $.ajax({
+                    url: '@Url.Action("CalculaSaque")',
+                    type: "POST",
+                    dataType: "json",
+                    data: {valorSaq: $("#ValorSaque").val()},
+                    success: function(r){
                         console.log("Botão funcionou");
-                        $("#nota100").html(r.N100);
-                        $("#nota50").html(r.N50);
-                        $("#nota20").html(r.N20);
-                        $("#nota10").html(r.N10);
-                        $("#nota5").html(r.N5);
-                        $("#nota2").html(r.N2);
-                        $("#valid").html(r.Valid);
+                        $("#nota100").html(r.n100);
+                        $("#nota50").html(r.n50);
+                        $("#nota20").html(r.n20);
+                        $("#nota10").html(r.n10);
+                        $("#nota5").html(r.n5);
+                        $("#nota2").html(r.n2);
+                        $("#saldoTotal").html(r.saldoFinal);
+                        $("#valid").html(r.valid);
                     }
-
-                )
+                })
             })
         })
         $(document).ready(function(){
             $("#Depositar").click(function(){
                 $.ajax({
                     url: '@Url.Action("DepositaValor")',
-                    type: "GET",
-                    data: {value: $("#ValorDeposita").val()},
+                    type: "POST",
+                    dataType: "json",
+                    data: {valorDep: $("#ValorDeposita").val()},
                     success: function(dep){
                         console.log("Depositando");
-                        $("#saldoTotal").html(dep.SaldoTotal)
+                        $("#saldoTotal").html(dep.saldoFinal)
                     }
                 })
             })

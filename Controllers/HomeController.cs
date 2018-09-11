@@ -24,30 +24,24 @@ namespace CaixaEletronicoCode.Controllers
             return View(testModelo);
         }
 
-        [HttpPost]
-        public JsonResult Index(string valorSaque)
+        public JsonResult DepositaValor(string valorDep)
         {
-            var withdrawJson = CalculaSaque(valorSaque);
-
-            return Json(withdrawJson);
-        }
-
-        public JsonResult DepositaValor(string ValorDeposita)
-        {
-            var deposito = ValorDeposita;
+            var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
 
             var depositando = new Deposito();
 
-            var testDeposito = depositando.AcrescentaSaldo(depositarValor);
-
-            return Json(testDeposito);
+            var depositoSaque = new ValoresNotas
+            {
+                SaldoFinal = depositando.AcrescentaSaldo(depositarValor)
+            };
+            return Json(depositoSaque);
         }
 
         [HttpPost]
-        public JsonResult CalculaSaque(string newValue)
+        public JsonResult CalculaSaque(string valorSaq)
         {
-            var testSaque = newValue;
+            var testSaque = valorSaq;
             
             int value;
 
