@@ -36,7 +36,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous">
-    </script>    
+    </script>  
 </head>
 <body>
     <div class="header">
@@ -50,83 +50,94 @@
         <div>
             <label for="ValorDeposita">Deposite o valor:</label>
             <input type="text" name="ValorDeposita" value="" placeholder="Insira aqui" />
-            <button id="Depositar">Depositar</button>
         </div>
     </form>
+    <button id="Depositar">Depositar</button>
     <div>
         <br>
-        <p>Saldo total: <b id="SaldoTotal"></b></p>
+        <p>Saldo total: <b id="saldoTotal"></b></p>
     </div>
     <div>
         <br>
         <h4>Saque</h4>
     </div>
-    <form method="POST" action="CalculaSaque" runat="server">
+    <form method="POST" runat="server">
         <div>
             <label for="ValorSaque">Valor a ser sacado:</label>
-            <input type="text" name="ValorSaque" id="ValorSaque" placeholder="Insira aqui" />
+            <input type="text" id="ValorSaque" name="ValorSaque" placeholder="Insira aqui" />
         </div>
-        
     </form>
     <button id="Sacar">Sacar</button>
     <div>
-        <form action="CalculaSaque">
-            <h3>Notas</h3>
-            <table>
-                <tr>
-                    <th>Valor Notas</th>
-                    <th>Quantidade</th>
-                </tr>
-                <tr>
-                    <td>Nota de 100</td>
-                    <td id="nota100" style="text-align:center">@Model.N100</td>
-                </tr>
-                <tr>
-                    <td>Nota de 50</td>
-                    <td id="nota50" style="text-align:center">@Model.N50</td>
-                </tr>
-                <tr>
-                    <td>Nota de 20</td>
-                    <td id="nota20" style="text-align:center">@Model.N20</td>
-                </tr>
-                <tr>
-                    <td>Nota de 10</td>
-                    <td id="nota10" style="text-align:center">@Model.N10</td>
-                </tr>
-                <tr>
-                    <td>Nota de 5</td>
-                    <td id="nota5" style="text-align:center">@Model.N5</td>
-                </tr>
-                <tr>
-                    <td>Nota de 2</td>
-                    <td id="nota2" style="text-align:center">@Model.N2</td>
-                </tr>
-            </table>
-        </form>
+        <h3>Notas</h3>
+        <table>
+            <tr>
+                <th>Valor Notas</th>
+                <th>Quantidade</th>
+            </tr>
+            <tr>
+                <td>Nota de 100</td>
+                <td name="nota100" id="nota100" style="text-align:center">@Model.N100</td>
+            </tr>
+            <tr>
+                <td>Nota de 50</td>
+                <td name="nota50" id="nota50" style="text-align:center">@Model.N50</td>
+            </tr>
+            <tr>
+                <td>Nota de 20</td>
+                <td name="nota20" id="nota20" style="text-align:center">@Model.N20</td>
+            </tr>
+            <tr>
+                <td>Nota de 10</td>
+                <td name="nota10" id="nota10" style="text-align:center">@Model.N10</td>
+            </tr>
+            <tr>
+                <td>Nota de 5</td>
+                <td name="nota5" id="nota5" style="text-align:center">@Model.N5</td>
+            </tr>
+            <tr>
+                <td>Nota de 2</td>
+                <td name="nota2" id="nota2" style="text-align:center">@Model.N2</td>
+            </tr>
+        </table>
         <div>
             <br>
-            <b>@Html.DisplayFor(modelItem => Model.Valid)</b> 
+            <b id="valid">@Model.Valid</b> 
             <!--Somente sinalizar se saque for inválido-->
         </div>
     </div>
-    <!--Este ajax tem que ser modificado para a atualização da tabela-->
     <script>
         $(document).ready(function(){
             $("#Sacar").click(function(){
-                $.ajax({
-                    url: '@Url.Action("CalculaSaque")',
-                    data: { value: $("#ValorSaque").val() },
-                    success: function (r) {
-                        console.log("testando");
+                $.post(
+                    '@Url.Action("CalculaSaque")',
+                    {value: $("#ValorSaque").val()},
+                    function(r){
+                        console.log("Botão funcionou");
                         $("#nota100").html(r.N100);
-                        $("#nota50").html(r.n50);
-                        $("#nota20").html(r.n20);
-                        $("#nota10").html(r.n10);
-                        $("#nota5").html(r.n5);
-                        $("#nota2").html(r.n2);
+                        $("#nota50").html(r.N50);
+                        $("#nota20").html(r.N20);
+                        $("#nota10").html(r.N10);
+                        $("#nota5").html(r.N5);
+                        $("#nota2").html(r.N2);
+                        $("#valid").html(r.Valid);
+                    }
+
+                )
+            })
+        })
+        $(document).ready(function(){
+            $("#Depositar").click(function(){
+                $.ajax({
+                    url: '@Url.Action("DepositaValor")',
+                    type: "GET",
+                    data: {value: $("#ValorDeposita").val()},
+                    success: function(dep){
+                        console.log("Depositando");
+                        $("#saldoTotal").html(dep.SaldoTotal)
                     }
                 })
             })
         })
-    </script>
+    </script> 
 </body>
