@@ -1,6 +1,6 @@
 using System;
 
-namespace CaixaEletronicoCode.Models
+namespace TestUser.Models
 {
     public class ErrorViewModel
     {

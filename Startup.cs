@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TestUser.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CaixaEletronicoCode
+namespace TestUser
 {
     public class Startup
     {
@@ -31,6 +34,12 @@ namespace CaixaEletronicoCode
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -38,7 +47,6 @@ namespace CaixaEletronicoCode
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -49,6 +57,7 @@ namespace CaixaEletronicoCode
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -56,10 +65,12 @@ namespace CaixaEletronicoCode
                 app.UseHsts();
             }
 
-            app.UseCookiePolicy();
             app.UseHttpsRedirection();
-            app.UseSession();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseSession();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

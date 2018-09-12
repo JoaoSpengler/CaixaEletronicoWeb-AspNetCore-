@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CaixaEletronicoCode.Models;
+using TestUser.Models;
 
-namespace CaixaEletronicoCode.Controllers
+namespace TestUser.Controllers
 {
     public class HomeController : Controller
     {
@@ -20,7 +22,6 @@ namespace CaixaEletronicoCode.Controllers
                 N2 = 0,
                 Valid = "Aguardando Transações!"
             };
-
             return View(testModelo);
         }
 
@@ -49,7 +50,7 @@ namespace CaixaEletronicoCode.Controllers
         {
             var testSaque = valorSaq;
             var balance = HttpContext.Session.GetObjectFromJson<int>("Saldo");
-            
+
             int value;
 
             if (testSaque == "")
@@ -75,18 +76,19 @@ namespace CaixaEletronicoCode.Controllers
             //Trocar variáveis para trabalhar com o Saldo ao invés do depósito
 
             //Apenas ilustrativo / para se ter uma noção se o deposito funciona
-            
+
 
             bool saqueAprovado;
-            
-            if (value > balance){
+
+            if (value > balance)
+            {
                 saqueAprovado = false;
             }
             else
             {
                 saqueAprovado = true;
             }
-            
+
             if (saqueAprovado == false)
             {
                 //Mostrar ao usuario que o saldo é insuficiente.
@@ -95,7 +97,7 @@ namespace CaixaEletronicoCode.Controllers
                     SaldoFinal = balance,
                     Valid = "Saldo Insuficiente"
                 };
-                HttpContext.Session.SetObjectAsJson("Saldo" , saldoInsuficiente.SaldoFinal);
+                HttpContext.Session.SetObjectAsJson("Saldo", saldoInsuficiente.SaldoFinal);
 
                 return Json(saldoInsuficiente);
             }
@@ -120,7 +122,7 @@ namespace CaixaEletronicoCode.Controllers
                 nota2 = (((((value % 100) % 50) % 20) % 10) / 2);
 
                 value = (value - ((100 * nota100) + (50 * nota50) + (20 * nota20) + (10 * nota10) + (2 * nota2)));
-                
+
                 if (value == 0)
                 {
                     var testModelo = new ValoresNotas()
@@ -135,7 +137,7 @@ namespace CaixaEletronicoCode.Controllers
                         Valid = "Saque efetuado com sucesso"
                     };
 
-                    HttpContext.Session.SetObjectAsJson("Saldo" , testModelo.SaldoFinal);
+                    HttpContext.Session.SetObjectAsJson("Saldo", testModelo.SaldoFinal);
                     //Retirar Valor do Saque do Saldo total e Atualizar na tela.
                     return Json(testModelo);
                 }
@@ -177,7 +179,7 @@ namespace CaixaEletronicoCode.Controllers
         {
             return View();
         }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
