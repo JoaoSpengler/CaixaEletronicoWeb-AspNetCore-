@@ -3,7 +3,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CaixaEletronicoCode.Models;
-using Test.Models;
 
 namespace CaixaEletronicoCode.Controllers
 {
@@ -28,18 +27,19 @@ namespace CaixaEletronicoCode.Controllers
         public JsonResult DepositaValor(string valorDep)
         {
             //Criar e gerenciar a sessão com os dados do Saldo!
-
             var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
+            var newValueSaq = HttpContext.Session.GetObjectFromJson<int>("Saldo");
 
-            var balanceTotal = new ValoresNotas();
+            //Aqui está um problema!
+            //Todo novo depósito usa uma nova instância de ValoresNotas!
 
             var depositoSaque = new ValoresNotas
             {
-                SaldoFinal = balanceTotal.AtualizaSaldo(depositarValor)
+                SaldoFinal = (depositarValor + newValueSaq),
+                Deposito = depositarValor
             };
-
-            HttpContext.Session.SetObjectAsJson("Saldo" , depositoSaque.SaldoFinal);
+            HttpContext.Session.SetObjectAsJson("Saldo", depositoSaque.SaldoFinal);
 
             return Json(depositoSaque);
         }
@@ -95,6 +95,8 @@ namespace CaixaEletronicoCode.Controllers
                     SaldoFinal = balance,
                     Valid = "Saldo Insuficiente"
                 };
+                HttpContext.Session.SetObjectAsJson("Saldo" , saldoInsuficiente.SaldoFinal);
+
                 return Json(saldoInsuficiente);
             }
             else
@@ -132,6 +134,8 @@ namespace CaixaEletronicoCode.Controllers
                         SaldoFinal = balance - testAttValor,
                         Valid = "Saque efetuado com sucesso"
                     };
+
+                    HttpContext.Session.SetObjectAsJson("Saldo" , testModelo.SaldoFinal);
                     //Retirar Valor do Saque do Saldo total e Atualizar na tela.
                     return Json(testModelo);
                 }
@@ -139,6 +143,7 @@ namespace CaixaEletronicoCode.Controllers
                 {
                     var testModelo = new ValoresNotas()
                     {
+                        SaldoFinal = balance,
                         Valid = "Valor inválido, notas indisponiveis"
                     };
                     return Json(testModelo);
