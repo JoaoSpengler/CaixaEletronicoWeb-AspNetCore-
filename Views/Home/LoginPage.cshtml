@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<head>
+    <style>
+        input{
+            color: black;
+            background-color: white;
+            border: 2px solid rgb(188, 190, 192);
+            border-radius: 7px;
+            padding: 3px;
+            width: 250px;
+        }
+        button{
+            color:black;
+            background-color: darkgray;
+            border: 2px solid rgb(131, 131, 131);
+            border-radius: 7px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;" align="center">
+        <h3>@ViewData["Message"]</h3>
+        <h4>Cash Machine Web System</h4>
+        <br>
+        <form>
+            <label>Login</label><br>
+            <input type="email" id="LoginId" name="loginId" placeholder="Insert your Email or User Name"/>
+            <br><br>
+            <label>Password</label><br>
+            <input type="password" id="PasswordId" name="passwordId" placeholder="Insert your password"/>
+        </form>
+        <br>
+        <button>Log In</button>
+    </div>
+</body>

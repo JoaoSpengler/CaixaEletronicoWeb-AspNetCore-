@@ -12224,11 +12224,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joao.spengler\\source\\repos\\TestUser\\TestUser\\TestUser.csproj",
+      "projectUniqueName": "C:\\Users\\joao.spengler\\Desktop\\CaixaEletronicoWeb-AspNetCore-\\TestUser.csproj",
       "projectName": "TestUser",
-      "projectPath": "C:\\Users\\joao.spengler\\source\\repos\\TestUser\\TestUser\\TestUser.csproj",
+      "projectPath": "C:\\Users\\joao.spengler\\Desktop\\CaixaEletronicoWeb-AspNetCore-\\TestUser.csproj",
       "packagesPath": "C:\\Users\\joao.spengler\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joao.spengler\\source\\repos\\TestUser\\TestUser\\obj\\",
+      "outputPath": "C:\\Users\\joao.spengler\\Desktop\\CaixaEletronicoWeb-AspNetCore-\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

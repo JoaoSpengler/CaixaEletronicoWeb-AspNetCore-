@@ -160,6 +160,20 @@ namespace TestUser.Controllers
             return View();
         }
 
+        public IActionResult LoginPage()
+        {
+            ViewData["Message"] = "Your login page.";
+
+            return View();
+        }
+
+        public IActionResult RegisterUser()
+        {
+            ViewData["Message"] = "Your register page.";
+
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
