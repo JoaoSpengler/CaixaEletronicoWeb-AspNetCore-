@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TestUser.Models;
+using CaixaEletronicoCode.Models;
 
-namespace TestUser.Controllers
+namespace CaixaEletronicoCode.Controllers
 {
     public class HomeController : Controller
     {
@@ -22,25 +20,25 @@ namespace TestUser.Controllers
                 N2 = 0,
                 Valid = "Aguardando Transações!"
             };
+
             return View(testModelo);
         }
 
         public JsonResult DepositaValor(string valorDep)
         {
             //Criar e gerenciar a sessão com os dados do Saldo!
+
             var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
-            var newValueSaq = HttpContext.Session.GetObjectFromJson<int>("Saldo");
 
-            //Aqui está um problema!
-            //Todo novo depósito usa uma nova instância de ValoresNotas!
+            var balanceTotal = new ValoresNotas();
 
             var depositoSaque = new ValoresNotas
             {
-                SaldoFinal = (depositarValor + newValueSaq),
-                Deposito = depositarValor
+                SaldoFinal = balanceTotal.AtualizaSaldo(depositarValor)
             };
-            HttpContext.Session.SetObjectAsJson("Saldo", depositoSaque.SaldoFinal);
+
+            HttpContext.Session.SetObjectAsJson("Saldo" , depositoSaque.SaldoFinal);
 
             return Json(depositoSaque);
         }
@@ -50,7 +48,7 @@ namespace TestUser.Controllers
         {
             var testSaque = valorSaq;
             var balance = HttpContext.Session.GetObjectFromJson<int>("Saldo");
-
+            
             int value;
 
             if (testSaque == "")
@@ -76,19 +74,18 @@ namespace TestUser.Controllers
             //Trocar variáveis para trabalhar com o Saldo ao invés do depósito
 
             //Apenas ilustrativo / para se ter uma noção se o deposito funciona
-
+            
 
             bool saqueAprovado;
-
-            if (value > balance)
-            {
+            
+            if (value > balance){
                 saqueAprovado = false;
             }
             else
             {
                 saqueAprovado = true;
             }
-
+            
             if (saqueAprovado == false)
             {
                 //Mostrar ao usuario que o saldo é insuficiente.
@@ -97,8 +94,6 @@ namespace TestUser.Controllers
                     SaldoFinal = balance,
                     Valid = "Saldo Insuficiente"
                 };
-                HttpContext.Session.SetObjectAsJson("Saldo", saldoInsuficiente.SaldoFinal);
-
                 return Json(saldoInsuficiente);
             }
             else
@@ -122,7 +117,7 @@ namespace TestUser.Controllers
                 nota2 = (((((value % 100) % 50) % 20) % 10) / 2);
 
                 value = (value - ((100 * nota100) + (50 * nota50) + (20 * nota20) + (10 * nota10) + (2 * nota2)));
-
+                
                 if (value == 0)
                 {
                     var testModelo = new ValoresNotas()
@@ -136,8 +131,6 @@ namespace TestUser.Controllers
                         SaldoFinal = balance - testAttValor,
                         Valid = "Saque efetuado com sucesso"
                     };
-
-                    HttpContext.Session.SetObjectAsJson("Saldo", testModelo.SaldoFinal);
                     //Retirar Valor do Saque do Saldo total e Atualizar na tela.
                     return Json(testModelo);
                 }
@@ -145,7 +138,6 @@ namespace TestUser.Controllers
                 {
                     var testModelo = new ValoresNotas()
                     {
-                        SaldoFinal = balance,
                         Valid = "Valor inválido, notas indisponiveis"
                     };
                     return Json(testModelo);
@@ -162,14 +154,14 @@ namespace TestUser.Controllers
 
         public IActionResult LoginPage()
         {
-            ViewData["Message"] = "Your login page.";
+            ViewData["Message"] = "Your Login page.";
 
             return View();
         }
 
         public IActionResult RegisterUser()
         {
-            ViewData["Message"] = "Your register page.";
+            ViewData["Message"] = "Your Register page.";
 
             return View();
         }
@@ -193,7 +185,7 @@ namespace TestUser.Controllers
         {
             return View();
         }
-        
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

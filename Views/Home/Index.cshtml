@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home    Page";
+    ViewBag.Title = "Home Page";
 }
 
 @model ValoresNotas
@@ -10,19 +10,17 @@
             border-collapse: inherit;
             border: 2px solid black;
             border-radius: 7px;
-            padding: 3px;
+            padding: 2px;
             background-color: rgb(238, 232, 232);
         }
-
         th {
             background-color: black;
             padding: 3px;
             color: rgb(255, 255, 255);
-            width: 150px;
-            text-align: center;
+            width:150px;
+            text-align:center;
         }
-
-        button {
+        button{
             box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2), 0 2px 3px 0 rgba(0,0,0,0.19);
             border: none;
             padding: 3px 10px;
@@ -32,43 +30,40 @@
             font-size: 14px;
             margin: 4px 2px;
             cursor: pointer;
-            background-color: #a8a8a8;
+            background-color: #ebdfdf;
             color: black;
             border-radius: 3px;
             border: 0.5px solid #858585;
         }
-
-        .transation {
+        .transation{
             color: black;
-            background-color: white;
+            background-color:white;
             border: 2px solid black;
             border-radius: 13px;
             padding: 6px;
         }
-
-        input {
+        input{
             border-radius: 5px;
             border-color: black;
         }
-
-        .deposit, .withdraw {
-            background-color: rgb(255, 239, 219);
+        .deposit, .withdraw{
+            background-color:rgb(250, 228, 199);
             padding: 13px;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous">
-    </script>
+    </script>  
 </head>
 <body>
     <div class="header">
-        <h3>Caixa Eletrônico</h3>
+        <h2>Caixa Eletrônico</h2>
     </div>
     <div class="deposit">
         <div>
             <br>
-            <h3>Deposito</h3>
+            <h4>Deposito</h4>
         </div>
         <form method="POST" runat="server">
             <div>
@@ -85,7 +80,7 @@
     <div class="withdraw">
         <div>
             <br>
-            <h3>Saque</h3>
+            <h4>Saque</h4>
         </div>
         <form method="POST" runat="server">
             <div>
@@ -95,7 +90,7 @@
         </form>
         <button id="Sacar">Sacar</button>
         <div>
-            <h4>Notas</h4>
+            <h3>Notas</h3>
             <table>
                 <tr>
                     <th>Valor Notas</th>
@@ -130,7 +125,7 @@
                 <br>
                 <b class="transation" id="valid">
                     @Model.Valid
-                </b>
+                </b> 
                 <!--Somente sinalizar se saque for inválido-->
             </div>
         </div>
@@ -171,5 +166,5 @@
                 })
             })
         })
-    </script>
+    </script> 
 </body>
