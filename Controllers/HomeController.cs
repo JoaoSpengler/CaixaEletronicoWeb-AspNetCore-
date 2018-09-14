@@ -127,15 +127,17 @@ namespace SystemCashMachineWeb.Controllers
             int depositarValor = Convert.ToInt32(deposito);
 
             var userDep = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
-
-            var balanceTotal = new ValoresNotas();
-
+            
+            //Refazer lógica para acrescentar os dados do DB
+            
             var depositoSaque = new ValoresNotas
             {
-                SaldoFinal = balanceTotal.AtualizaSaldo(depositarValor)
+                SaldoFinal = userDep.BalanceAccount + depositarValor
             };
 
+            //HttpContext.Session.SetObjectAsJson("User", );
             HttpContext.Session.SetObjectAsJson("Saldo", depositoSaque.SaldoFinal);
+            repo.Update(userDep.CodUser, depositoSaque.SaldoFinal);
 
             return Json(depositoSaque);
         }
