@@ -1,6 +1,6 @@
 using System;
 
-namespace CaixaEletronicoCode.Models
+namespace SystemCashMachineWeb.Models
 {
     public class ErrorViewModel
     {

@@ -1,10 +1,10 @@
-@{
+﻿@{
     ViewData["Title"] = "Register Page";
 }
 
 <head>
     <style>
-        input{
+        input {
             color: black;
             background-color: white;
             border: 2px solid rgb(188, 190, 192);
@@ -12,8 +12,9 @@
             padding: 3px;
             width: 250px;
         }
-        button{
-            color:black;
+
+        .account {
+            color: black;
             background-color: darkgray;
             border: 2px solid rgb(131, 131, 131);
             border-radius: 7px;
@@ -29,17 +30,20 @@
         <h3>@ViewData["Message"]</h3>
         <h4>Cash Machine Web System</h4>
         <br>
-        <form>
+        <form action="RegisterUser" method="post">
             <label>Email</label><br>
-            <input type="email" id="EmailId" name="emailId" placeholder="Insert a valid email"/><br><br>
+            <input type="text" id="LoginId" name="loginId" placeholder="Insert a valid email" /><br><br>
             <label>User Name</label><br>
-            <input type="text" id="UserNameId" name="userNameId" placeholder="Insert your name"/><br><br>
+            <input type="text" id="UserNameId" name="userNameId" placeholder="Insert your name" /><br><br>
             <label>Password</label><br>
-            <input type="password" id="PasswordId" name="passwordId" placeholder="Insert a password"/><br><br>
+            <input type="password" id="PasswordId" name="passwordId" placeholder="Insert a password" /><br><br>
             <input type="password" id="PasswordConfirm" name="passwordConfirm" placeholder="Confirm your password">
+
+
+            <p style="color:red;">@ViewData["Error"]</p>
+            <input class="account" id="btnSub" type="submit" value="Register">
         </form>
         <br>
-        <button>Register</button>
         <br><br>
         <p>
             Have an account? <a href="/">Sign in</a>

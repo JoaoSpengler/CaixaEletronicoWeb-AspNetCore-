@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SystemCashMachineWeb.ConnectionDatabase;
+using SystemCashMachineWeb.Models;
 
-namespace CaixaEletronicoCode
+namespace SystemCashMachineWeb
 {
     public class Startup
     {
@@ -31,6 +33,8 @@ namespace CaixaEletronicoCode
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<IUserRepository<UserAccount>, UserRepository>();
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -38,7 +42,6 @@ namespace CaixaEletronicoCode
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
             });
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -2,12 +2,107 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CaixaEletronicoCode.Models;
+using SystemCashMachineWeb.Models;
+using SystemCashMachineWeb.ConnectionDatabase;
 
-namespace CaixaEletronicoCode.Controllers
+namespace SystemCashMachineWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private IUserRepository<UserAccount> repo;
+
+        public HomeController(IUserRepository<UserAccount> connections)
+        {
+            repo = connections;
+        }
+
+        public IActionResult LoginPage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginPage(string LoginUser, string PasswordUser)
+        {
+            var findUser = repo.FindUser(LoginUser);
+            
+            if (findUser == null)
+            {
+                @ViewData["LoginError"] = "User not found - Try another login";
+                return View();
+            }
+            else if(findUser.LoginUser == LoginUser && findUser.PasswordUser == PasswordUser)
+            {
+                var user = new UserAccount
+                {
+                    LoginUser = findUser.LoginUser,
+                    PasswordUser = findUser.PasswordUser,
+                    CodUser = findUser.CodUser,
+                    BalanceAccount = findUser.BalanceAccount,
+                    UserName = findUser.UserName
+                };
+                var cashValue = new ValoresNotas();
+
+                cashValue.User = user;
+                HttpContext.Session.SetObjectAsJson("User", user);
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewData["LoginError"] = "Incorrect Password";
+                return View();
+            }
+        }
+
+        public IActionResult LogOut()
+        {
+            var user = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
+           
+            user = null;
+            HttpContext.Session.SetObjectAsJson("User", user);
+
+            return RedirectToAction("LoginPage");
+        }
+
+        public IActionResult RegisterUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RegisterUser(string LoginId, string UserNameId, string PasswordId, string PasswordConfirm)
+        {
+            var user = new UserAccount();
+
+            if(UserNameId.Length < 6)
+            {
+                ViewData["Error"] = "Insert a User Name with minnimun of 6 caracters";
+            }
+            else if(PasswordId.Length < 5)
+            {
+                ViewData["Error"] = "Password must be at least 8 characters";
+            }
+            else if (PasswordId != PasswordConfirm)
+            {
+                ViewData["Error"] = "Password aren't the same";
+            }
+            else
+            {
+                user = new UserAccount
+                {
+                    LoginUser = LoginId,
+                    PasswordUser = PasswordId,
+                    UserName = UserNameId,
+                    BalanceAccount = 100
+                };
+                repo.Save(user);
+                return RedirectToAction("LoginPage");
+            }
+
+            return View(user);
+        }
+
         public IActionResult Index()
         {
             var testModelo = new ValoresNotas()
@@ -31,6 +126,8 @@ namespace CaixaEletronicoCode.Controllers
             var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
 
+            var userDep = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
+
             var balanceTotal = new ValoresNotas();
 
             var depositoSaque = new ValoresNotas
@@ -38,7 +135,7 @@ namespace CaixaEletronicoCode.Controllers
                 SaldoFinal = balanceTotal.AtualizaSaldo(depositarValor)
             };
 
-            HttpContext.Session.SetObjectAsJson("Saldo" , depositoSaque.SaldoFinal);
+            HttpContext.Session.SetObjectAsJson("Saldo", depositoSaque.SaldoFinal);
 
             return Json(depositoSaque);
         }
@@ -48,7 +145,7 @@ namespace CaixaEletronicoCode.Controllers
         {
             var testSaque = valorSaq;
             var balance = HttpContext.Session.GetObjectFromJson<int>("Saldo");
-            
+
             int value;
 
             if (testSaque == "")
@@ -74,18 +171,19 @@ namespace CaixaEletronicoCode.Controllers
             //Trocar variáveis para trabalhar com o Saldo ao invés do depósito
 
             //Apenas ilustrativo / para se ter uma noção se o deposito funciona
-            
+
 
             bool saqueAprovado;
-            
-            if (value > balance){
+
+            if (value > balance)
+            {
                 saqueAprovado = false;
             }
             else
             {
                 saqueAprovado = true;
             }
-            
+
             if (saqueAprovado == false)
             {
                 //Mostrar ao usuario que o saldo é insuficiente.
@@ -117,7 +215,7 @@ namespace CaixaEletronicoCode.Controllers
                 nota2 = (((((value % 100) % 50) % 20) % 10) / 2);
 
                 value = (value - ((100 * nota100) + (50 * nota50) + (20 * nota20) + (10 * nota10) + (2 * nota2)));
-                
+
                 if (value == 0)
                 {
                     var testModelo = new ValoresNotas()
@@ -148,20 +246,6 @@ namespace CaixaEletronicoCode.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult LoginPage()
-        {
-            ViewData["Message"] = "Your Login page.";
-
-            return View();
-        }
-
-        public IActionResult RegisterUser()
-        {
-            ViewData["Message"] = "Your Register page.";
 
             return View();
         }
