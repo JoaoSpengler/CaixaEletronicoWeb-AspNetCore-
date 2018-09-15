@@ -51,6 +51,22 @@
             border-color: black;
         }
 
+        .logout {
+            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2), 0 2px 3px 0 rgba(0,0,0,0.19);
+            border: 2px solid rgb(131, 131, 131);
+            border-radius: 7px;
+            padding: 2px 7px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: rgb(51, 51, 51);
+            color: white;
+            border: 0.5px solid black;
+        }
+
         .deposit, .withdraw {
             background-color: rgb(250, 228, 199);
             padding: 13px;
@@ -62,6 +78,9 @@
     </script>
 </head>
 <body>
+    <form action="LogOut" class="Menu">
+        <button class="logout">LogOut</button>
+    </form>
     <div class="header">
         <h2>Caixa Eletrônico</h2>
     </div>
@@ -87,7 +106,7 @@
             <br>
             <h4>Saque</h4>
         </div>
-        <form method="POST" runat="server">
+        <form id="formSaque" method="POST" runat="server">
             <div>
                 <label for="ValorSaque">Valor a ser sacado:</label>
                 <input type="text" id="ValorSaque" name="valorSaq" placeholder="Insira aqui" />
@@ -156,19 +175,20 @@
                     }
                 })
             })
-        })
-        $(document).ready(function(){
-            $("#Depositar").click(function(){
+            $("#Depositar").click(function () {
                 $.ajax({
                     url: '@Url.Action("DepositaValor")',
                     type: "POST",
                     dataType: "json",
-                    data: {valorDep: $("#ValorDeposita").val()},
-                    success: function(dep){
+                    data: { valorDep: $("#ValorDeposita").val() },
+                    success: function (dep) {
                         console.log("Depositando");
                         $("#saldoTotal").html(dep.saldoFinal)
                     }
                 })
+            });
+            $("form").on("submit", function (event) {
+                event.preventDefault();
             })
         })
     </script>

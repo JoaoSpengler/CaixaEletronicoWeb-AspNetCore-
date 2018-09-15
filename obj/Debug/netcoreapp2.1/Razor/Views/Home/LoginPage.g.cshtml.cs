@@ -64,7 +64,7 @@ using SystemCashMachineWeb.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(48, 590, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "61a885e6d27049c48b4361434d7c7476", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "53a71eccbf3547c886c92c2315797b17", async() => {
                 BeginContext(54, 577, true);
                 WriteLiteral(@"
     <style>
@@ -106,7 +106,7 @@ using SystemCashMachineWeb.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(640, 819, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f2f70918c174328966c1d845401a597", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e9244eebd062440fa3a1f5039493a246", async() => {
                 BeginContext(646, 61, true);
                 WriteLiteral("\r\n    <div style=\"width: 100%;\" align=\"center\">\r\n        <h3>");
                 EndContext();
@@ -121,7 +121,7 @@ using SystemCashMachineWeb.Models;
                 WriteLiteral("</h3>\r\n        <h4>Cash Machine Web System</h4>\r\n        <br>\r\n        ");
                 EndContext();
                 BeginContext(798, 502, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "789c5281da084064a6a022a73c93372b", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5bf083af16e1490a99ff0250d5ba1578", async() => {
                     BeginContext(828, 349, true);
                     WriteLiteral(@"
             <label>Login</label><br>

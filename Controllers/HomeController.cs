@@ -105,6 +105,8 @@ namespace SystemCashMachineWeb.Controllers
 
         public IActionResult Index()
         {
+            var user = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
+
             var testModelo = new ValoresNotas()
             {
                 N100 = 0,
@@ -113,6 +115,7 @@ namespace SystemCashMachineWeb.Controllers
                 N10 = 0,
                 N5 = 0,
                 N2 = 0,
+                SaldoFinal = user.BalanceAccount,
                 Valid = "Aguardando Transações!"
             };
 
@@ -126,18 +129,20 @@ namespace SystemCashMachineWeb.Controllers
             var deposito = valorDep;
             int depositarValor = Convert.ToInt32(deposito);
 
-            var userDep = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
+            var user = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
             
             //Refazer lógica para acrescentar os dados do DB
             
             var depositoSaque = new ValoresNotas
             {
-                SaldoFinal = userDep.BalanceAccount + depositarValor
+                SaldoFinal = user.BalanceAccount + depositarValor
             };
 
-            //HttpContext.Session.SetObjectAsJson("User", );
+            user.BalanceAccount = depositoSaque.SaldoFinal;
+            
             HttpContext.Session.SetObjectAsJson("Saldo", depositoSaque.SaldoFinal);
-            repo.Update(userDep.CodUser, depositoSaque.SaldoFinal);
+            repo.Update(user.CodUser, depositoSaque.SaldoFinal);
+            HttpContext.Session.SetObjectAsJson("User", user);
 
             return Json(depositoSaque);
         }
@@ -146,11 +151,11 @@ namespace SystemCashMachineWeb.Controllers
         public JsonResult CalculaSaque(string valorSaq)
         {
             var testSaque = valorSaq;
-            var balance = HttpContext.Session.GetObjectFromJson<int>("Saldo");
+            var user = HttpContext.Session.GetObjectFromJson<UserAccount>("User");
 
             int value;
 
-            if (testSaque == "")
+            if (testSaque == "" || testSaque == null)
             {
                 value = 0;
             }
@@ -170,14 +175,10 @@ namespace SystemCashMachineWeb.Controllers
                 testAttValor = value;
             }
 
-            //Trocar variáveis para trabalhar com o Saldo ao invés do depósito
-
-            //Apenas ilustrativo / para se ter uma noção se o deposito funciona
-
 
             bool saqueAprovado;
 
-            if (value > balance)
+            if (value > user.BalanceAccount)
             {
                 saqueAprovado = false;
             }
@@ -191,7 +192,7 @@ namespace SystemCashMachineWeb.Controllers
                 //Mostrar ao usuario que o saldo é insuficiente.
                 var saldoInsuficiente = new ValoresNotas()
                 {
-                    SaldoFinal = balance,
+                    SaldoFinal = user.BalanceAccount,
                     Valid = "Saldo Insuficiente"
                 };
                 return Json(saldoInsuficiente);
@@ -228,10 +229,15 @@ namespace SystemCashMachineWeb.Controllers
                         N10 = nota10,
                         N5 = nota5,
                         N2 = nota2,
-                        SaldoFinal = balance - testAttValor,
+                        SaldoFinal = user.BalanceAccount - testAttValor,
                         Valid = "Saque efetuado com sucesso"
                     };
-                    //Retirar Valor do Saque do Saldo total e Atualizar na tela.
+                    user.BalanceAccount = testModelo.SaldoFinal;
+
+                    HttpContext.Session.SetObjectAsJson("Saldo", testModelo.SaldoFinal);
+                    repo.Update(user.CodUser, testModelo.SaldoFinal);
+                    HttpContext.Session.SetObjectAsJson("User", user);
+
                     return Json(testModelo);
                 }
                 else
