@@ -253,6 +253,7 @@ namespace SystemCashMachineWeb.Controllers
                 {
                     var testModelo = new ValoresNotas()
                     {
+                        SaldoFinal = user.BalanceAccount,
                         Valid = "Valor inválido, notas indisponiveis"
                     };
                     return Json(testModelo);
