@@ -71,36 +71,45 @@ namespace SystemCashMachineWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterUser(string LoginId, string UserNameId, string PasswordId, string PasswordConfirm)
+        public IActionResult RegisterUser(string LoginUser, string UserNameId, string PasswordId, string PasswordConfirm)
         {
             var user = new UserAccount();
+            var findUser = repo.FindUser(LoginUser);
 
-            if(UserNameId.Length < 6)
+            if(findUser != null)
             {
-                ViewData["Error"] = "Insert a User Name with minnimun of 6 caracters";
-            }
-            else if(PasswordId.Length < 5)
-            {
-                ViewData["Error"] = "Password must be at least 8 characters";
-            }
-            else if (PasswordId != PasswordConfirm)
-            {
-                ViewData["Error"] = "Password aren't the same";
+                ViewData["Error"] = "Email already registered";
+                return View();
             }
             else
             {
-                user = new UserAccount
+                if (LoginUser == null || UserNameId.Length < 6)
                 {
-                    LoginUser = LoginId,
-                    PasswordUser = PasswordId,
-                    UserName = UserNameId,
-                    BalanceAccount = 100
-                };
-                repo.Save(user);
-                return RedirectToAction("LoginPage");
-            }
+                    ViewData["Error"] = "Insert a User Name with minnimun of 6 caracters";
+                }
+                else if (PasswordId.Length < 5)
+                {
+                    ViewData["Error"] = "Password must be at least 8 characters";
+                }
+                else if (PasswordId != PasswordConfirm)
+                {
+                    ViewData["Error"] = "Password aren't the same";
+                }
+                else
+                {
+                    user = new UserAccount
+                    {
+                        LoginUser = LoginUser,
+                        PasswordUser = PasswordId,
+                        UserName = UserNameId,
+                        BalanceAccount = 0
+                    };
+                    repo.Save(user);
+                    return RedirectToAction("LoginPage");
+                }
 
-            return View(user);
+                return View(user);
+            }
         }
 
         public IActionResult Index()

@@ -6,12 +6,27 @@
 
 <head>
     <style>
+        .header {
+            color: black;
+            text-align: justify;
+            text-decoration: overline;
+            font-size: x-large;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .deposit, .withdraw {
+            background-color: #eae2e2;
+            padding: 15px;
+            border: 3px groove rgb(51, 51, 51);
+            border-radius: 5px;
+        }
+
         table {
             border-collapse: inherit;
             border: 2px solid black;
             border-radius: 7px;
             padding: 2px;
-            background-color: rgb(238, 232, 232);
+            background-color: rgb(240, 240, 240);
         }
 
         th {
@@ -20,6 +35,12 @@
             color: rgb(255, 255, 255);
             width: 150px;
             text-align: center;
+        }
+        .thRight{
+            border-top-right-radius:5px;
+        }
+        .thLeft {
+            border-top-left-radius: 5px;
         }
 
         button {
@@ -30,46 +51,43 @@
             text-decoration: none;
             display: inline-block;
             font-size: 14px;
+            font-weight: bold;
+            color: rgb(40, 40, 40);
             margin: 4px 2px;
             cursor: pointer;
-            background-color: #ebdfdf;
-            color: black;
+            background-color: rgb(150, 150, 150);
             border-radius: 3px;
             border: 0.5px solid #858585;
         }
-
-        .transation {
-            color: black;
-            background-color: white;
-            border: 2px solid black;
-            border-radius: 13px;
-            padding: 6px;
+        .logout {
+            border: 2px solid rgb(131, 131, 131);
+            padding: 2px 7px;
+            background-color: rgb(51, 51, 51);
+            color: white;
+            border: 0.5px solid black;
         }
 
         input {
             border-radius: 5px;
             border-color: black;
         }
-
-        .logout {
-            box-shadow: 0 2px 3px 0 rgba(0,0,0,0.2), 0 2px 3px 0 rgba(0,0,0,0.19);
-            border: 2px solid rgb(131, 131, 131);
-            border-radius: 7px;
-            padding: 2px 7px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px 2px;
-            cursor: pointer;
-            background-color: rgb(51, 51, 51);
-            color: white;
-            border: 0.5px solid black;
+        .transation {
+            color: black;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 12px;
+            padding: 6px;
         }
 
-        .deposit, .withdraw {
-            background-color: rgb(250, 228, 199);
-            padding: 13px;
+        .balance {
+            font-size: medium;
+            font-style: italic;
+            font-weight: 600;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif font-weight: 600;
+            color: rgb(49, 49, 49);
+            border: 3px groove rgb(51, 51, 51);
+            padding: 3px;
+            background-color:white;
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -82,14 +100,13 @@
         <button class="logout">LogOut</button>
     </form>
     <div class="header">
-        <h2>Caixa Eletrônico</h2>
+        WEB CASH MACHINE
     </div>
     <div class="deposit">
         <div>
-            <br>
-            <h4>Deposito</h4>
+            <h3>Deposito</h3>
         </div>
-        <form method="POST" runat="server">
+        <form id="formDep" method="POST" runat="server">
             <div>
                 <label for="ValorDeposita">Deposite o valor:</label>
                 <input type="text" id="ValorDeposita" name="valorDep" placeholder="Insira aqui" />
@@ -98,15 +115,14 @@
         <button id="Depositar">Depositar</button>
         <div>
             <br>
-            <p>Saldo total: <b id="saldoTotal">@Model.SaldoFinal</b></p>
+            <p class="balance">Saldo total: <b id="saldoTotal" style="color:darkgreen">@Model.SaldoFinal</b></p>
         </div>
     </div>
     <div class="withdraw">
         <div>
-            <br>
-            <h4>Saque</h4>
+            <h3>Saque</h3>
         </div>
-        <form id="formSaque" method="POST" runat="server">
+        <form id="formWith" method="POST" runat="server">
             <div>
                 <label for="ValorSaque">Valor a ser sacado:</label>
                 <input type="text" id="ValorSaque" name="valorSaq" placeholder="Insira aqui" />
@@ -114,11 +130,11 @@
         </form>
         <button id="Sacar">Sacar</button>
         <div>
-            <h3>Notas</h3>
+            <h4>Notas</h4>
             <table>
                 <tr>
-                    <th>Valor Notas</th>
-                    <th>Quantidade</th>
+                    <th class="thLeft">Valor Notas</th>
+                    <th class="thRight">Quantidade</th>
                 </tr>
                 <tr>
                     <td>Nota de 100</td>
@@ -187,9 +203,12 @@
                     }
                 })
             });
-            $("form").on("submit", function (event) {
+            $("#formDep").on("submit", function (event) {
                 event.preventDefault();
-            })
+            });
+            $("#formWith").on("submit", function (event) {
+                event.preventDefault();
+            });
         })
     </script>
 </body>
